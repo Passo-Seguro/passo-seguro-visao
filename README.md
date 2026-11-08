@@ -56,7 +56,7 @@ de 1 s: 87 ms com 1 thread e 34 ms com 4. No vídeo, roda a 31 FPS em CPU.
 
 ![detecções em tempo real](docs/prints/06_tempo_real_quadros.jpg)
 
-Vídeo da solução: _link do YouTube (não listado)_ · Relatório: [`docs/relatorio.md`](docs/relatorio.md) ·
+Vídeo da solução: [YouTube](https://www.youtube.com/watch?v=PzwxpBVbOYc) · Relatório: [`docs/relatorio.md`](docs/relatorio.md) ·
 Roteiro do vídeo: [`docs/roteiro-video.md`](docs/roteiro-video.md)
 
 ## 3. Requisitos e máquina usada
@@ -400,7 +400,7 @@ python scripts/gerar_relatorio_pdf.py     # docs/relatorio.md -> docs/relatorio.
 
 O vídeo de demonstração (2min07s) é montado a partir das saídas reais: o `10_tempo_real.py` e uma
 chamada ao `POST /deteccoes` pelo Swagger. Ele fica em `docs/video/` (fora do git, como todo
-`.mp4`) e vai para o YouTube como não listado. O roteiro para uma versão narrada está em
+`.mp4`) e está no YouTube como não listado: https://www.youtube.com/watch?v=PzwxpBVbOYc. O roteiro para uma versão narrada está em
 [`docs/roteiro-video.md`](docs/roteiro-video.md). Antes do push:
 
 ```powershell
@@ -632,7 +632,7 @@ O build Docker usa a raiz do repositório como contexto (`docker build -f deploy
 
 ## 12. Links
 
-- Vídeo: _link do YouTube (não listado)_
+- Vídeo: https://www.youtube.com/watch?v=PzwxpBVbOYc
 
 ### Repositórios do projeto
 - Principal: [passo-seguro](https://github.com/Passo-Seguro/passo-seguro)
