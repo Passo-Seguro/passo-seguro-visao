@@ -4,7 +4,7 @@
 
 **Integrantes:** Guilherme Morais (RM 551981) · Júlia Marques (RM 98680) · Matheus Gusmão (RM 550826)
 
-**Repositório:** https://github.com/Passo-Seguro/passo-seguro-visao · **Vídeo:** [link do YouTube (não listado)]
+**Repositório:** https://github.com/Passo-Seguro/passo-seguro-visao · **Vídeo:** https://www.youtube.com/watch?v=PzwxpBVbOYc
 
 ## Resumo
 
