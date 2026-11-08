@@ -1,0 +1,66 @@
+# CÓPIA de contratos/classes.yaml do repositório principal (passo-seguro). Não edite aqui:
+# mude lá e copie de novo. tests/test_classes.py confere a ordem.
+#
+# Fonte única de verdade das classes de problema de calçada.
+#
+# - O `nome` é usado IGUAL (sem acento, snake_case) no modelo de visão, no banco,
+#   na triagem, no robô e nos gráficos.
+# - O `id` é o índice da classe no data.yaml do YOLO (0 a 3, nesta ordem).
+# - A ordem desta lista deve ser a mesma do enum `Categoria` em openapi.yaml.
+#   `scripts/checar-classes.sh` falha se divergirem.
+#
+# Para mudar uma classe: altere aqui, depois em openapi.yaml, e rode
+# `scripts/validar-contratos.sh`.
+
+classes:
+  - id: 0
+    nome: buraco
+    definicao: Cavidade aberta no piso da calçada, com perda de material, que expõe a base ou o solo e pode causar tropeço ou queda.
+    exemplos:
+      - Lajes ou ladrilhos arrancados, deixando um vão aberto.
+      - Afundamento do piso com a terra ou o contrapiso à mostra.
+      - Bueiro, boca de lobo ou caixa de inspeção sem tampa, dentro da calçada.
+      - Buraco aberto por obra ou concessionária e não fechado.
+    nao_conta:
+      - Buraco no asfalto da rua (leito carroçável) não é buraco de calçada.
+      - Rachadura ou laje solta sem perda de material é piso_danificado.
+      - Desnível causado por raiz de árvore é piso_danificado.
+
+  - id: 1
+    nome: piso_danificado
+    definicao: Piso da calçada quebrado, rachado, solto ou desnivelado, sem formar uma cavidade aberta.
+    exemplos:
+      - Lajes ou ladrilhos quebrados, soltos ou balançando.
+      - Rachaduras largas ou piso afundado/levantado formando degrau.
+      - Raiz de árvore levantando o piso.
+      - Remendo mal feito que deixou ressalto ou desnível.
+      - Piso tátil quebrado, solto ou removido.
+    nao_conta:
+      - Cavidade aberta com perda de material é buraco.
+      - Rua sem calçada ou com terra batida é ausência de calçada, fora do escopo das quatro classes.
+      - Sujeira, mato ou lixo sobre o piso intacto não é piso_danificado.
+
+  - id: 2
+    nome: obstaculo
+    definicao: Objeto fixo ou permanente, ou entulho acumulado, que reduz ou bloqueia a faixa livre de passagem do pedestre.
+    exemplos:
+      - Poste, orelhão, caixa de energia ou placa posicionados no meio da faixa de passagem.
+      - Lixeira, banca, mesa de bar ou mercadoria ocupando a calçada.
+      - Entulho, caçamba ou material de obra deixado na calçada.
+      - Galhos baixos ou vegetação que invadem a faixa de passagem.
+    nao_conta:
+      - Carro, moto, caminhão ou bicicleta parados na calçada são veiculo_na_calcada.
+      - Pessoas, filas e ambulantes que passam pela calçada de forma momentânea não são obstáculo.
+      - Mobiliário urbano que deixa a faixa livre adequada não é obstáculo.
+
+  - id: 3
+    nome: veiculo_na_calcada
+    definicao: Veículo parado ou estacionado sobre a calçada, ocupando ou bloqueando a faixa de passagem do pedestre.
+    exemplos:
+      - Carro ou moto estacionados com as rodas sobre a calçada.
+      - Caminhão ou van de entrega parados sobre o passeio.
+      - Bicicleta ou patinete largados no meio da faixa de passagem.
+    nao_conta:
+      - Veículo estacionado corretamente na via, sem invadir a calçada.
+      - Veículo atravessando a calçada em movimento para entrar ou sair de uma garagem.
+      - Bicicleta presa a paraciclo ou bicicletário instalado na calçada.

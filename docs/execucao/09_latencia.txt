@@ -1,0 +1,36 @@
+
+=== Resultado ===
+Latência em CPU — detector.onnx, 100 execuções, threads=1, CPU: AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD
+
+| Etapa | p50 (ms) | p95 (ms) | média (ms) |
+|---|---|---|---|
+| pré-processamento | 4.4 | 4.8 | 4.5 |
+| modelo | 82.2 | 85.3 | 82.5 |
+| pós-processamento | 0.3 | 0.4 | 0.3 |
+| total | 87.0 | 90.2 | 87.3 |
+
+Vazão aproximada: 11.4 imagens/s por réplica.
+
+=== Resultado ===
+Latência em CPU — detector.onnx, 100 execuções, threads=2, CPU: AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD
+
+| Etapa | p50 (ms) | p95 (ms) | média (ms) |
+|---|---|---|---|
+| pré-processamento | 4.6 | 5.9 | 4.8 |
+| modelo | 44.1 | 62.5 | 47.2 |
+| pós-processamento | 0.3 | 0.5 | 0.4 |
+| total | 49.0 | 69.3 | 52.4 |
+
+Vazão aproximada: 19.1 imagens/s por réplica.
+
+=== Resultado ===
+Latência em CPU — detector.onnx, 100 execuções, threads=4, CPU: AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD
+
+| Etapa | p50 (ms) | p95 (ms) | média (ms) |
+|---|---|---|---|
+| pré-processamento | 5.2 | 6.0 | 5.3 |
+| modelo | 28.5 | 41.3 | 30.5 |
+| pós-processamento | 0.4 | 0.5 | 0.4 |
+| total | 34.1 | 47.5 | 36.2 |
+
+Vazão aproximada: 27.6 imagens/s por réplica.

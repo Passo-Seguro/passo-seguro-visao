@@ -1,0 +1,31 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- .venv\Scripts\python.exe
+metadata: {'Python': '3.12.10', 'Platform': 'Windows-11-10.0.26300-SP0', 'Packages': {'pytest': '9.2.0', 'pluggy': '1.7.0'}, 'Plugins': {'anyio': '4.16.0', 'html': '4.2.0', 'metadata': '3.1.1'}}
+rootdir: .
+plugins: anyio-4.16.0, html-4.2.0, metadata-3.1.1
+collecting ... collected 21 items
+
+tests/test_caixas.py::test_centro_para_canto_superior_esquerdo PASSED    [  4%]
+tests/test_caixas.py::test_contrato_normaliza_e_prende_entre_0_e_1 PASSED [  9%]
+tests/test_caixas.py::test_iou PASSED                                    [ 14%]
+tests/test_caixas.py::test_nms_tira_sobreposta PASSED                    [ 19%]
+tests/test_caixas.py::test_parear_classifica_erros PASSED                [ 23%]
+tests/test_classes.py::test_ordem_igual_ao_contrato PASSED               [ 28%]
+tests/test_classes.py::test_toda_classe_tem_rotulo_e_cor PASSED          [ 33%]
+tests/test_detector.py::test_detector_onnx_desfaz_letterbox PASSED       [ 38%]
+tests/test_publicos.py::test_copias_da_mesma_foto_ficam_no_mesmo_grupo_e_fotos_vizinhas_nao PASSED [ 42%]
+tests/test_publicos.py::test_rotulo_valido_aceita_caixa_e_poligono PASSED [ 47%]
+tests/test_publicos.py::test_rotulo_invalido_descarta_a_imagem PASSED    [ 52%]
+tests/test_servico.py::test_200_no_formato_do_contrato PASSED            [ 57%]
+tests/test_servico.py::test_png_tambem PASSED                            [ 61%]
+tests/test_servico.py::test_401_sem_token_ou_token_errado PASSED         [ 66%]
+tests/test_servico.py::test_413_acima_de_10_mb PASSED                    [ 71%]
+tests/test_servico.py::test_422_imagem_ilegivel PASSED                   [ 76%]
+tests/test_servico.py::test_422_tipo_nao_aceito PASSED                   [ 80%]
+tests/test_servico.py::test_400_sem_o_campo_imagem PASSED                [ 85%]
+tests/test_servico.py::test_503_sem_modelo PASSED                        [ 90%]
+tests/test_servico.py::test_saude_e_metricas PASSED                      [ 95%]
+tests/test_servico.py::test_lista_vazia_quando_nada_passa_do_limiar PASSED [100%]
+
+- Generated html report: file:///docs/execucao/relatorio_testes.html -
+============================= 21 passed in 4.96s ==============================

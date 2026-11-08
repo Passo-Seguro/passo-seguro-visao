@@ -1,0 +1,57 @@
+
+=== yolo11n_baseline_640 ===
+Ultralytics 8.4.208  Python-3.12.10 torch-2.14.1+cu130 CUDA:0 (NVIDIA GeForce RTX 4080, 16376MiB)
+YOLO11n summary (fused): 101 layers, 2,597,780 parameters, 0 gradients, 6.4 GFLOPs
+[34m[1mval: [0mFast image access  (ping: 0.1±0.0 ms, read: 181.8±61.3 MB/s, size: 82.2 KB)
+
+[34m[1mval: [0mNew cache created: dados\dataset\test\labels.cache
+
+[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 6% ╸─────────── 1/16 43.7s/it 13.1s<10:55
+                   all        251        406      0.726       0.61      0.638      0.353
+Speed: 0.9ms preprocess, 2.0ms inference, 0.0ms loss, 0.8ms postprocess per image
+Results saved to [1mexecucoes\yolo11n_baseline_640_teste[0m
+{"nome": "yolo11n_baseline_640", "mAP50": 0.6383, "mAP50_95": 0.3531, "precisao": 0.7261, "recall": 0.6103, "inferencia_ms_por_imagem": 2.0, "device": "0"}
+
+=== yolo11n_final_640 ===
+Ultralytics 8.4.208  Python-3.12.10 torch-2.14.1+cu130 CUDA:0 (NVIDIA GeForce RTX 4080, 16376MiB)
+YOLO11n summary (fused): 101 layers, 2,597,780 parameters, 0 gradients, 6.4 GFLOPs
+[34m[1mval: [0mFast image access  (ping: 0.1±0.0 ms, read: 560.7±322.6 MB/s, size: 50.1 KB)
+
+
+[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 6% ╸─────────── 1/16 43.7s/it 13.1s<10:56
+                   all        251        406      0.724      0.643      0.655      0.408
+Speed: 0.8ms preprocess, 1.9ms inference, 0.0ms loss, 0.7ms postprocess per image
+Results saved to [1mexecucoes\yolo11n_final_640_teste[0m
+{"nome": "yolo11n_final_640", "mAP50": 0.6548, "mAP50_95": 0.4081, "precisao": 0.7239, "recall": 0.6432, "inferencia_ms_por_imagem": 1.9, "device": "0"}
+
+=== yolo11s_final_640 ===
+Ultralytics 8.4.208  Python-3.12.10 torch-2.14.1+cu130 CUDA:0 (NVIDIA GeForce RTX 4080, 16376MiB)
+YOLO11s summary (fused): 100 layers, 9,414,348 parameters, 0 gradients, 21.4 GFLOPs
+[34m[1mval: [0mFast image access  (ping: 0.1±0.1 ms, read: 810.8±675.2 MB/s, size: 113.3 KB)
+
+
+[K                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 6% ╸─────────── 1/16 43.5s/it 13.1s<10:53
+                   all        251        406      0.764       0.66      0.679      0.419
+Speed: 0.8ms preprocess, 2.9ms inference, 0.0ms loss, 1.0ms postprocess per image
+Results saved to [1mexecucoes\yolo11s_final_640_teste[0m
+{"nome": "yolo11s_final_640", "mAP50": 0.6787, "mAP50_95": 0.4186, "precisao": 0.7638, "recall": 0.6601, "inferencia_ms_por_imagem": 2.9, "device": "0"}
+
+=== COCO sem ajuste ===
+{'mAP50': 0.0, 'precisao': 0.0, 'recall': 0.0}
+
+| Modelo | mAP50 | mAP50-95 | Precisão | Recall | ms/imagem (0) |
+|---|---|---|---|---|---|
+| yolo11n_baseline_640 | 0.6383 | 0.3531 | 0.7261 | 0.6103 | 2.0 |
+| yolo11n_final_640 | 0.6548 | 0.4081 | 0.7239 | 0.6432 | 1.9 |
+| yolo11s_final_640 | 0.6787 | 0.4186 | 0.7638 | 0.6601 | 2.9 |
+
+Por classe (mAP50 / recall):
+
+| Modelo | buraco | piso_danificado | obstaculo | veiculo_na_calcada |
+|---|---|---|---|---|
+| yolo11n_baseline_640 | 0.5604 / 0.549 | 0.7162 / 0.6716 | - / - | - / - |
+| yolo11n_final_640 | 0.5797 / 0.5551 | 0.7299 / 0.7313 | - / - | - / - |
+| yolo11s_final_640 | 0.5825 / 0.5809 | 0.7749 / 0.7393 | - / - | - / - |
+| COCO sem ajuste | - | - | - | 0.0 / 0.0 |
+
+Tabela para o PDF: resultados\comparacao.md

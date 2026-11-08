@@ -1,0 +1,8 @@
+*
+!requirements/servico.txt
+!visao/
+!servico/
+!config/classes.yaml
+!modelos/detector.onnx
+!modelos/detector.json
+**/__pycache__

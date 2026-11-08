@@ -1,0 +1,21 @@
+
+=== Sistema ===
+Python 3.12.10 em Windows 11
+
+=== PyTorch ===
+torch 2.14.1+cu130
+GPU: NVIDIA GeForce RTX 4080 (16.0 GB de VRAM), CUDA 13.0
+Sugestão de treino: nano com batch 32, small com batch 16 (ou batch -1 = automático)
+
+=== Pacotes ===
+ok  ultralytics 8.4.208
+ok  onnx 1.23.2
+ok  onnxruntime 1.31.1
+ok  cv2 5.0.0
+ok  PIL 13.0.0
+ok  yaml 6.0.3
+ok  pandas 3.1.1
+
+=== Ferramentas ===
+nvidia-smi: encontrado
+docker: encontrado

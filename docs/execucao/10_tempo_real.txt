@@ -1,0 +1,3 @@
+Usando detector.onnx com CPUExecutionProvider
+Vídeo anotado: resultados/demo.mp4
+450 quadros, FPS médio final 31.2

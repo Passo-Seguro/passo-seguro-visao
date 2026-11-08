@@ -1,0 +1,10 @@
+{
+  "nome": "coco_sem_ajuste (só veiculo_na_calcada)",
+  "por_classe": {
+    "veiculo_na_calcada": {
+      "mAP50": 0.0,
+      "precisao": 0.0,
+      "recall": 0.0
+    }
+  }
+}

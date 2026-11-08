@@ -1,0 +1,14 @@
+# Treino, avaliação, preparação de dados e tempo real (no seu PC).
+# ANTES deste arquivo, instale o PyTorch com CUDA (ver README.md, seção 4).
+ultralytics>=8.3.0,<9
+opencv-python>=4.9
+onnx>=1.16
+onnxslim>=0.1.34
+onnxruntime>=1.18
+numpy>=1.26
+pillow>=10.3
+pyyaml>=6.0
+pandas>=2.2
+matplotlib>=3.8
+tqdm>=4.66
+-r servico.txt

@@ -1,0 +1,53 @@
+# Datasets públicos (Roboflow Universe) usados no treino.
+#
+# Para cada dataset:
+#   1. No Roboflow Universe, abra o projeto e confira a LICENÇA (aparece na página do dataset).
+#      Use só licenças que permitem reuso: CC BY 4.0, CC0/Public Domain, MIT. Evite "CC BY-NC"
+#      se o produto for comercial (o pitch prevê receita) e qualquer uma sem licença declarada.
+#   2. Download Dataset -> formato "YOLOv8" (ou YOLOv11) -> "Download zip to computer".
+#   3. Descompacte em dados/brutos/publicos/<pasta>/  (deve ter data.yaml e train/ valid/ test/).
+#   4. Preencha um bloco abaixo. `remapear` liga o nome da classe NO DATASET a uma das 4 classes
+#      do contrato (buraco, piso_danificado, obstaculo, veiculo_na_calcada) ou a `descartar`
+#      (a caixa some, a imagem fica). Classe que não estiver na lista = erro (para não esquecer).
+#   5. Rode:  python scripts/01_importar_publicos.py
+#
+# Baixados e convertidos por scripts/01a_baixar_publicos.py (nenhum exige login). Nenhum tem
+# obstáculo nem veículo na calçada: essas duas classes dependem das fotos próprias de SP.
+
+datasets:
+  - pasta: crack-seg
+    nome: Crack segmentation (Ultralytics, origem Roboflow Universe)
+    url: https://docs.ultralytics.com/datasets/segment/crack-seg/
+    licenca: CC BY 4.0
+    ativo: true
+    remapear:
+      crack: piso_danificado
+
+  - pasta: manot-pothole
+    nome: Road damage v3 (manot/pothole-segmentation)
+    url: https://universe.roboflow.com/abdulmohsen-fahad-f7pdw/road-damage-xvt2d
+    licenca: CC BY 4.0
+    ativo: true
+    remapear:
+      potholes: buraco
+      pothole: buraco
+      object: descartar     # 2 caixas sem definição clara
+
+  - pasta: keremberke-pothole
+    nome: Pothole Detection (keremberke/pothole-segmentation)
+    url: https://universe.roboflow.com/imacs-pothole-detection-wo8mu/pothole-detection-irkz9
+    licenca: CC BY 4.0
+    ativo: true
+    remapear:
+      pothole: buraco
+
+  - pasta: rupesh-pothole
+    nome: Pothole detection dataset (rupesh002)
+    url: https://huggingface.co/datasets/rupesh002/pothole-detection-dataset
+    licenca: MIT
+    ativo: true
+    remapear:
+      pothole: buraco
+
+# Teto de imagens importadas por dataset (evita que um dataset enorme engula as fotos de SP).
+max_imagens_por_dataset: 1500

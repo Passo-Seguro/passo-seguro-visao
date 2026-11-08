@@ -1,0 +1,23 @@
+{
+  "nome": "yolo11n_baseline_640",
+  "mAP50": 0.6383,
+  "mAP50_95": 0.3531,
+  "precisao": 0.7261,
+  "recall": 0.6103,
+  "inferencia_ms_por_imagem": 2.0,
+  "device": "0",
+  "por_classe": {
+    "buraco": {
+      "precisao": 0.6483,
+      "recall": 0.549,
+      "mAP50": 0.5604,
+      "mAP50_95": 0.2893
+    },
+    "piso_danificado": {
+      "precisao": 0.8039,
+      "recall": 0.6716,
+      "mAP50": 0.7162,
+      "mAP50_95": 0.4169
+    }
+  }
+}

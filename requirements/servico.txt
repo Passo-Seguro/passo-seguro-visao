@@ -1,0 +1,8 @@
+# Só o necessário para o serviço POST /deteccoes (imagem Docker enxuta, sem PyTorch).
+fastapi>=0.115,<1
+uvicorn[standard]>=0.30
+python-multipart>=0.0.9
+onnxruntime>=1.18
+numpy>=1.26
+pillow>=10.3
+pyyaml>=6.0
