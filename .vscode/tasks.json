@@ -316,7 +316,7 @@
       "id": "video",
       "type": "promptString",
       "description": "Caminho do vídeo da caminhada",
-      "default": "videos/caminhada.mp4"
+      "default": "dados/videos/caminhada.mp4"
     }
   ]
 }

@@ -14,7 +14,9 @@ ANOTADO = DADOS / "anotado"
 DATASET = DADOS / "dataset"
 MODELOS = RAIZ / "modelos"
 RESULTADOS = RAIZ / "resultados"
-EXECUCOES = RAIZ / "execucoes"  # saída bruta do Ultralytics (pesada, fora do git)
+EXECUCOES = MODELOS / "treinos"  # saída bruta do Ultralytics (pesada, fora do git)
+PESOS_COCO = MODELOS / "coco"     # yolo11n.pt etc. pré-treinados, baixados na 1ª vez (fora do git)
+VIDEOS = DADOS / "videos"         # vídeos da caminhada (fora do git)
 
 
 def dispositivo_auto() -> str:

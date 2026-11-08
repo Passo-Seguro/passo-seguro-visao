@@ -1,13 +1,13 @@
 # Serviço POST /deteccoes — ONNX Runtime em CPU, sem PyTorch e sem Ultralytics na imagem.
-#   docker build -t ghcr.io/passo-seguro/passo-seguro-visao:local .
+#   docker build -f deploy/Dockerfile -t ghcr.io/passo-seguro/passo-seguro-visao:local .
 #   docker run --rm -p 8001:8000 -e VISAO_TOKEN=troque ghcr.io/passo-seguro/passo-seguro-visao:local
 # O modelo (modelos/detector.onnx) entra na imagem; nenhum segredo entra (VISAO_TOKEN vem do ambiente).
 
 FROM python:3.12-slim AS deps
 ENV PIP_NO_CACHE_DIR=1 PIP_DISABLE_PIP_VERSION_CHECK=1
 WORKDIR /build
-COPY requirements-servico.txt .
-RUN pip install --prefix=/install -r requirements-servico.txt
+COPY requirements/servico.txt requirements.txt
+RUN pip install --prefix=/install -r requirements.txt
 
 FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 MODELO_PATH=/app/modelos/detector.onnx

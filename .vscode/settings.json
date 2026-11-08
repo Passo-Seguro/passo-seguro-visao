@@ -8,6 +8,6 @@
   "terminal.integrated.env.linux": { "PYTHONPATH": "${workspaceFolder}" },
   "terminal.integrated.env.osx": { "PYTHONPATH": "${workspaceFolder}" },
   "files.exclude": { "**/__pycache__": true, ".pytest_cache": true },
-  "files.watcherExclude": { "**/dados/**": true, "**/execucoes/**": true },
-  "search.exclude": { "dados/**": true, "execucoes/**": true }
+  "files.watcherExclude": { "**/dados/**": true, "**/modelos/treinos/**": true },
+  "search.exclude": { "dados/**": true, "modelos/treinos/**": true }
 }

@@ -49,7 +49,7 @@ def main() -> int:
             mod = __import__(pacote)
             print(f"ok  {pacote} {getattr(mod, '__version__', '')}")
         except ImportError:
-            print(f"FALTA {pacote}  ->  pip install -r requirements.txt")
+            print(f"FALTA {pacote}  ->  pip install -r requirements/base.txt")
 
     titulo("Ferramentas")
     print(f"nvidia-smi: {'encontrado' if shutil.which('nvidia-smi') else 'não encontrado'}")

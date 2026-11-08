@@ -1,5 +1,5 @@
 *
-!requirements-servico.txt
+!requirements/servico.txt
 !visao/
 !servico/
 !config/classes.yaml

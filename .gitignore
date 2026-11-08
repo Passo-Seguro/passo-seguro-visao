@@ -229,7 +229,8 @@ secrets.h
 # Fotos e datasets ficam fora do git (pesados; fotos próprias só são publicadas depois do checar_lgpd)
 dados/*
 !dados/.gitkeep
-execucoes/
+modelos/treinos/
+modelos/coco/
 modelos/pesos/
 *.pt
 !modelos/detector.onnx

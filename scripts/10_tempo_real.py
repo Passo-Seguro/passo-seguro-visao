@@ -1,8 +1,8 @@
 """Detecção em tempo real com webcam ou vídeo gravado, mostrando caixas, classes e FPS.
 
     python scripts/10_tempo_real.py --fonte 0                          # webcam
-    python scripts/10_tempo_real.py --fonte videos/caminhada.mp4       # vídeo da caminhada
-    python scripts/10_tempo_real.py --fonte videos/caminhada.mp4 --salvar resultados/demo.mp4
+    python scripts/10_tempo_real.py --fonte dados/videos/caminhada.mp4       # vídeo da caminhada
+    python scripts/10_tempo_real.py --fonte dados/videos/caminhada.mp4 --salvar resultados/demo.mp4
     python scripts/10_tempo_real.py --fonte 0 --pt yolo11n_final_640   # usa o .pt na GPU
 
 Por padrão usa modelos/detector.onnx (o MESMO modelo do serviço), em CPU, ou em GPU se o

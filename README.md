@@ -91,7 +91,7 @@ git clone https://github.com/Passo-Seguro/passo-seguro-visao
 cd passo-seguro-visao
 python -m venv .venv
 .venv\Scripts\Activate.ps1
-pip install -r requirements-servico.txt
+pip install -r requirements/servico.txt
 ```
 
 **Para treinar e avaliar:**
@@ -106,8 +106,8 @@ python -m pip install --upgrade pip
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cu130
 # sem placa NVIDIA:  pip install torch torchvision
 
-pip install -r requirements.txt
-pip install -r requirements-dev.txt
+pip install -r requirements/base.txt
+pip install -r requirements/dev.txt
 python -c "import torch; print(torch.__version__, torch.cuda.is_available())"   # tem de sair True
 python scripts/00_verificar_ambiente.py   # mostra a GPU, a VRAM e o batch sugerido
 python -m pytest -q                       # 21 testes
@@ -134,7 +134,7 @@ uvicorn servico.app:app --port 8001
 **Docker** (imagem de 531 MB, com o modelo dentro):
 
 ```powershell
-docker build -t ghcr.io/passo-seguro/passo-seguro-visao:local .
+docker build -f deploy/Dockerfile -t ghcr.io/passo-seguro/passo-seguro-visao:local .
 docker run --rm -p 8001:8000 -e VISAO_TOKEN=token-local ghcr.io/passo-seguro/passo-seguro-visao:local
 ```
 
@@ -278,8 +278,8 @@ automática.
 
 ```powershell
 python scripts/10_tempo_real.py --fonte 0                                                  # webcam
-python scripts/10_tempo_real.py --fonte videos/caminhada.mp4 --salvar resultados/demo.mp4  # vídeo
-python scripts/10_tempo_real.py --fonte videos/caminhada.mp4 --pt yolo11s_final_640        # GPU (PyTorch)
+python scripts/10_tempo_real.py --fonte dados/videos/caminhada.mp4 --salvar resultados/demo.mp4  # vídeo
+python scripts/10_tempo_real.py --fonte dados/videos/caminhada.mp4 --pt yolo11s_final_640        # GPU (PyTorch)
 ```
 
 O FPS aparece no canto. O padrão usa o mesmo ONNX do serviço, em CPU. Grave a caminhada com o
@@ -577,29 +577,42 @@ dados/
   pre_anotado/                 saída do 03, para subir no Roboflow/CVAT
   anotado/proprias/            export YOLOv8 do Roboflow (ou YOLO 1.1 do CVAT) das suas fotos
   dataset/                     dataset final do 04: train/ val/ test/ + data.yaml
+  videos/                      vídeos da caminhada para o 10_tempo_real.py
 ```
 
 ## 10. Estrutura do repositório
 
 ```
-config/      classes.yaml (cópia do contrato) e datasets.yaml (fontes, licenças e remapeamento)
-visao/       pacote compartilhado: classes, caixas/IoU/NMS, detector ONNX, imagens sem EXIF
-scripts/     00 a 10, na ordem do trabalho, + 01a (datasets sem login) e LGPD (borrar_manual, checar_lgpd)
-servico/     FastAPI do POST /deteccoes
-tests/       contrato do serviço, detector, utilitários e datasets públicos
-modelos/     detector.onnx + detector.json (o modelo no ar, no git); pesos/*.pt (fora do git)
-resultados/  tabelas, métricas, matrizes de confusão e erros (scripts 01, 04, 06, 07 e 09)
-docs/        relatorio.md, roteiro-video.md, execucao/ (saídas reais), prints/
-dados/       fora do git (seção 9)
+passo-seguro-visao/
+├── README.md
+│
+├── visao/                    pacote compartilhado: classes, caixas/IoU/NMS, detector ONNX, imagens sem EXIF
+├── servico/                  FastAPI do POST /deteccoes
+├── scripts/                  00 a 10 na ordem do trabalho, 01a (datasets sem login) e LGPD (borrar_manual, checar_lgpd)
+├── tests/                    contrato do serviço, detector, utilitários e datasets públicos
+├── config/                   classes.yaml (cópia do contrato) e datasets.yaml (fontes, licenças, remapeamento)
+│
+├── dados/                    fora do git: brutos/, intermediario/, pre_anotado/, anotado/, dataset/, videos/
+├── modelos/                  detector.onnx + detector.json (o modelo no ar, no git)
+│   ├── pesos/                melhor .pt de cada treino (fora do git)
+│   ├── treinos/              saída completa do Ultralytics por treino (fora do git)
+│   └── coco/                 yolo11n.pt / yolo11s.pt pré-treinados, baixados na 1ª vez (fora do git)
+├── resultados/               tabelas, métricas, matrizes de confusão e erros (scripts 01, 04, 06, 07 e 09)
+│
+├── deploy/                   Dockerfile + Dockerfile.dockerignore do serviço
+├── requirements/             servico.txt (imagem Docker), base.txt (treino e avaliação), dev.txt (+ testes)
+└── docs/                     relatorio.md, roteiro-video.md, execucao/ (saídas reais), prints/
 ```
 
+O build Docker usa a raiz do repositório como contexto (`docker build -f deploy/Dockerfile .`), e o
+`deploy/Dockerfile.dockerignore` deixa entrar só o pacote, o serviço, as classes e o modelo.
 `resultados/` vai para o PDF e para o git, exceto as pastas de imagens de erro e os vídeos.
 
 ## 11. Solução de problemas
 
 | Sintoma | Causa e solução |
 |---|---|
-| `torch.cuda.is_available()` é `False` com placa NVIDIA | instale o torch pelo índice `cu130` antes do `requirements.txt` (seção 4) |
+| `torch.cuda.is_available()` é `False` com placa NVIDIA | instale o torch pelo índice `cu130` antes do `requirements/base.txt` (seção 4) |
 | `01_importar_publicos.py`: "classes sem remapeamento" | ligue cada classe do dataset a uma das 4 classes ou a `descartar` em `config/datasets.yaml` |
 | baseline com mAP perto de zero | rótulos errados (classe trocada ou caixa fora do lugar), não o modelo |
 | treino sem memória na GPU | `--batch 8` (ou menor) |

@@ -20,7 +20,7 @@ from pathlib import Path
 
 import yaml
 
-from _comum import DADOS, INTERMEDIARIO, dispositivo_auto, titulo
+from _comum import DADOS, INTERMEDIARIO, PESOS_COCO, dispositivo_auto, titulo
 from visao.classes import carregar_classes
 from visao.imagens import listar_imagens
 
@@ -30,7 +30,7 @@ COCO_PARA_VEICULO = {1: "bicycle", 2: "car", 3: "motorcycle", 5: "bus", 7: "truc
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--confianca", type=float, default=0.35)
-    ap.add_argument("--modelo", default="yolo11n.pt", help="baixado automaticamente na 1ª vez")
+    ap.add_argument("--modelo", default=str(PESOS_COCO / "yolo11n.pt"), help="baixado automaticamente na 1ª vez")
     args = ap.parse_args()
 
     from ultralytics import YOLO
@@ -49,6 +49,7 @@ def main() -> int:
     (rf / "images").mkdir(parents=True)
     (rf / "labels").mkdir(parents=True)
 
+    PESOS_COCO.mkdir(parents=True, exist_ok=True)
     modelo = YOLO(args.modelo)
     titulo(f"Pré-anotando {len(fotos)} fotos")
     total = 0

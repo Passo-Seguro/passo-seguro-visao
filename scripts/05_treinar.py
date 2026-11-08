@@ -12,7 +12,7 @@ Exemplos:
     python scripts/05_treinar.py --preset final --modelo n --imgsz 512 --batch 8
 
 Saídas:
-    execucoes/<nome>/          tudo o que o Ultralytics gera (curvas, matriz de confusão, pesos)
+    modelos/treinos/<nome>/    tudo o que o Ultralytics gera (curvas, matriz de confusão, pesos)
     modelos/pesos/<nome>.pt    melhor peso (best.pt), usado pelos passos seguintes
     resultados/<nome>/treino.json  resumo (melhor época, mAP50, mAP50-95, tempo, GPU)
 """
@@ -24,7 +24,7 @@ import shutil
 import sys
 import time
 
-from _comum import DATASET, EXECUCOES, MODELOS, RESULTADOS, dispositivo_auto, titulo
+from _comum import DATASET, EXECUCOES, MODELOS, PESOS_COCO, RESULTADOS, dispositivo_auto, titulo
 
 PRESETS = {
     "baseline": {"epocas": 20, "paciencia": 0},
@@ -74,7 +74,9 @@ def main() -> int:
         modelo.train(resume=True)
     else:
         # .pt = pré-treinado no COCO (transfer learning); .yaml = mesma arquitetura, pesos aleatórios
-        modelo = YOLO(f"{args.familia}{args.modelo}.{'yaml' if args.do_zero else 'pt'}")
+        PESOS_COCO.mkdir(parents=True, exist_ok=True)
+        modelo = YOLO(f"{args.familia}{args.modelo}.yaml" if args.do_zero
+                      else str(PESOS_COCO / f"{args.familia}{args.modelo}.pt"))
         inicio = time.time()
         modelo.train(
             data=str(data_yaml),

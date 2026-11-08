@@ -19,7 +19,7 @@ import sys
 
 import numpy as np
 
-from _comum import DATASET, EXECUCOES, MODELOS, RESULTADOS, dispositivo_auto, titulo
+from _comum import DATASET, EXECUCOES, MODELOS, PESOS_COCO, RESULTADOS, dispositivo_auto, titulo
 from visao.caixas import cxcywh_para_xyxy, iou, ler_rotulo_yolo
 from visao.classes import carregar_classes
 from visao.imagens import listar_imagens
@@ -98,7 +98,8 @@ def avaliar_coco(classes: list[str], device: str, imgsz: int) -> dict:
     from ultralytics import YOLO
 
     id_v = classes.index("veiculo_na_calcada")
-    modelo = YOLO("yolo11n.pt")
+    PESOS_COCO.mkdir(parents=True, exist_ok=True)
+    modelo = YOLO(str(PESOS_COCO / "yolo11n.pt"))
     imagens = listar_imagens(DATASET / "test" / "images")
     preds, gts = [], {}
     for k in range(0, len(imagens), 16):
