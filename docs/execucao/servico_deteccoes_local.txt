@@ -1,25 +1,28 @@
-# Serviço /deteccoes rodando com o ONNX FALSO dos testes (não é o modelo treinado)
+# Serviço /deteccoes com o modelo treinado (yolo11s_final_640, ONNX, CPU, 2 threads)
 
 $ GET /saude
-{"status":"ok","modelo":null,"classes":["buraco","piso_danificado","obstaculo","veiculo_na_calcada"],"limiar_confianca":0.4,"metricas_teste":null}
+{"status":"ok","modelo":"yolo11s_final_640","classes":["buraco","piso_danificado","obstaculo","veiculo_na_calcada"],"limiar_confianca":0.4,"metricas_teste":{"mAP50":0.6787,"mAP50_95":0.4186,"precisao":0.7638,"recall":0.6601}}
 
 $ POST /deteccoes sem token
 {"codigo":"nao_autenticado","mensagem":"Token ausente ou inválido."} [HTTP 401]
 
-$ POST /deteccoes foto 800x600
-[{"classe":"buraco","confianca":0.91,"caixa":{"x":0.4219,"y":0.4479,"largura":0.1562,"altura":0.1042}},{"classe":"piso_danificado","confianca":0.7,"caixa":{"x":0.7188,"y":0.5833,"largura":0.125,"altura":0.1667}}] [HTTP 200 em 0.031382s]
+$ POST /deteccoes manot-pothole__Pothole-damagex.rf.5ab0cf6b47ded2a452121e528aef7b56.jpg
+[{"classe":"buraco","confianca":0.8857,"caixa":{"x":0.3631,"y":0.3693,"largura":0.0726,"altura":0.0341}},{"classe":"buraco","confianca":0.8662,"caixa":{"x":0.0683,"y":0.7188,"largura":0.089,"altura":0.0857}},{"classe":"buraco","confianca":0.7921,"caixa":{"x":0.5736,"y":0.3778,"largura":0.1326,"altura":0.056}},{"classe":"buraco","confianca":0.7781,"caixa":{"x":0.6025,"y":0.3179,"largura":0.096,"altura":0.0339}},{"classe":"buraco","confianca":0.772,"caixa":{"x":0.4411,"y":0.3235,"largura":0.0579,"altura":0.0308}},{"classe":"buraco","confianca":0.7699,"caixa":{"x":0.3227,"y":0.3367,"largura":0.0662,"altura":0.0325}},{"classe":"buraco","confianca":0.7577,"caixa":{"x":0.483,"y":0.3482,"largura":0.1206,"altura":0.0511}},{"classe":"buraco","confianca":0.7516,"caixa":{"x":0.3497,"y":0.4092,"largura":0.087,"altura":0.0415}},{"classe":"buraco","confianca":0.7013,"caixa":{"x":0.4809,"y":0.4671,"largura":0.2241,"altura":0.0855}},{"classe":"buraco","confianca":0.6879,"caixa":{"x":0.2907,"y":0.3808,"largura":0.044,"altura":0.0233}},{"classe":"buraco","confianca":0.6505,"caixa":{"x":0.4356,"y":0.693,"largura":0.3837,"altura":0.2085}},{"classe":"buraco","confianca":0.6315,"caixa":{"x":0.5473,"y":0.2892,"largura":0.083,"altura":0.0302}},{"classe":"buraco","confianca":0.552,"caixa":{"x":0.5317,"y":0.3166,"largura":0.0501,"altura":0.0257}},{"classe":"buraco","confianca":0.5311,"caixa":{"x":0.5176,"y":0.2689,"largura":0.0716,"altura":0.0259}},{"classe":"buraco","confianca":0.4895,"caixa":{"x":0.5782,"y":0.2321,"largura":0.0522,"altura":0.0209}}] [HTTP 200 em 0.071315s]
 
-$ POST /deteccoes arquivo ilegível
-{"codigo":"dados_invalidos","mensagem":"Não foi possível ler a imagem.","detalhes":[{"campo":"imagem","problema":"imagem ilegível"}]} [HTTP 422]
+$ POST /deteccoes crack-seg__1282x.rf.8cb5f93bd366b90158b9d4a0c896ae0c.jpg
+[{"classe":"piso_danificado","confianca":0.4695,"caixa":{"x":0.2003,"y":0.6355,"largura":0.7585,"altura":0.1975}}] [HTTP 200 em 0.055326s]
+
+$ POST /deteccoes arquivo de texto
+{"codigo":"dados_invalidos","mensagem":"A imagem deve ser JPEG ou PNG.","detalhes":[{"campo":"imagem","problema":"tipo text/plain não aceito"}]} [HTTP 422]
 
 $ GET /metrics
 # TYPE visao_requisicoes_total counter
-visao_requisicoes_total{rota="/deteccoes",status="200"} 1
+visao_requisicoes_total{rota="/deteccoes",status="200"} 2
 visao_requisicoes_total{rota="/deteccoes",status="401"} 1
 visao_requisicoes_total{rota="/deteccoes",status="422"} 1
 # TYPE visao_deteccoes_total counter
-visao_deteccoes_total{classe="buraco"} 1
+visao_deteccoes_total{classe="buraco"} 15
 visao_deteccoes_total{classe="piso_danificado"} 1
-visao_latencia_segundos{quantil="0.5"} 0.0292
-visao_latencia_segundos{quantil="0.95"} 0.0617
-visao_latencia_segundos{quantil="0.99"} 0.0617
+visao_latencia_segundos{quantil="0.5"} 0.0537
+visao_latencia_segundos{quantil="0.95"} 0.0690
+visao_latencia_segundos{quantil="0.99"} 0.0690

@@ -20,12 +20,17 @@ entregar a classe e a posição ao Passo Seguro para triagem e priorização.
 
 ## Resultados
 
-> Preenchido a partir de `resultados/comparacao.md` depois do treino.
+> Conjunto de **teste** (251 imagens), de [`resultados/comparacao.md`](resultados/comparacao.md).
+> Execução de 08/11/2026 **só com datasets públicos** (sem fotos de SP); `obstaculo` e
+> `veiculo_na_calcada` ainda não têm exemplos. Detalhes em [`docs/execucao/README.md`](docs/execucao/README.md).
 
-| Modelo | mAP50 | mAP50-95 | Precisão | Recall | Latência CPU p95 |
+| Modelo | mAP50 | mAP50-95 | Precisão | Recall | Latência CPU p95 (1 thread) |
 |---|---|---|---|---|---|
-| YOLO11n ajustado | – | – | – | – | – |
-| YOLO11s ajustado | – | – | – | – | – |
+| YOLO11n ajustado | 0,655 | 0,408 | 0,724 | 0,643 | – |
+| **YOLO11s ajustado (no ar)** | **0,679** | **0,419** | **0,764** | **0,660** | 90 ms |
+
+Por classe (small): buraco mAP50 0,583, piso_danificado 0,775. Em CPU: 34 ms com 4 threads e
+31 FPS no vídeo.
 
 Vídeo da solução: _link do YouTube (não listado)_ · Relatório: [`docs/relatorio.md`](docs/relatorio.md)
 
@@ -38,6 +43,7 @@ Resumo:
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cu130
 pip install -r requirements.txt -r requirements-dev.txt
 python scripts/00_verificar_ambiente.py
+python scripts/01a_baixar_publicos.py         # datasets públicos sem login (opcional)
 python scripts/01_importar_publicos.py        # datasets do Roboflow -> 4 classes
 python scripts/02_preparar_fotos_proprias.py  # LGPD: borra rostos e placas, tira GPS
 python scripts/03_pre_anotar.py               # pré-anota veículos para o Roboflow/CVAT
@@ -82,12 +88,20 @@ servico/     FastAPI do POST /deteccoes
 tests/       contrato do serviço, detector e utilitários
 modelos/     detector.onnx + detector.json (o modelo no ar)
 resultados/  tabelas, métricas, matriz de confusão e erros que vão para o PDF
-docs/        relatório (PDF) e roteiro do vídeo
+docs/        GUIA_DE_USO, TESTES, execucao/ (saídas reais), prints/, relatório e roteiro do vídeo
 ```
+
+## Documentação
+
+- [Guia de uso do serviço](docs/GUIA_DE_USO.md): contrato, exemplos em curl, Python e JS, erros, configuração e tempo real
+- [Testes](docs/TESTES.md): o que cada um dos 21 testes garante e como rodar
+- [Registro de execução](docs/execucao/README.md): datasets, treino, teste, erros, latência, serviço e container, com números e problemas encontrados
+- [Prints](docs/prints/): testes, Swagger, chamadas, detecções desenhadas, curvas, matriz de confusão, erros
 
 ## Dados, licenças e LGPD
 
-- Datasets públicos e licenças: `resultados/tabela_datasets.md`.
+- Datasets públicos e licenças: `resultados/tabela_datasets.md`. Algumas fotos dos datasets de
+  buraco têm marca d'água de banco de imagens: confira a licença antes de publicar imagens.
 - As fotos próprias são publicadas só depois de borrar rostos e placas e tirar todos os
   metadados (GPS incluído). `scripts/checar_lgpd.py` confere antes do push.
 - O Ultralytics é AGPL-3.0, o que este repositório público atende. O serviço em produção não

@@ -1,0 +1,136 @@
+=== Treinando yolo11n_baseline_640 em device=0 (20 épocas, paciência 0, batch 32) ===
+Ultralytics 8.4.208  Python-3.12.10 torch-2.14.1+cu130 CUDA:0 (NVIDIA GeForce RTX 4080, 16376MiB)
+engine\trainer: agnostic_nms=False, amp=True, angle=1.0, augment=False, auto_augment=randaugment, batch=32, bgr=0.0, box=7.5, cache=False, cfg=None, channels_last=None, classes=None, close_mosaic=10, cls=0.5, cls_pw=0.0, cls_remap=True, compile=False, conf=None, copy_paste=0.0, copy_paste_mode=flip, cos_lr=False, cutmix=0.0, data=.\dados\dataset\data.yaml, degrees=5.0, deterministic=False, device=0, dfl=1.5, dgrad=0.5, dis=6.0, distill_model=None, dlam=1.0, dlog=1.0, dnn=False, dropout=0.0, dynamic=False, embed=None, epochs=20, erasing=0.4, exist_ok=True, fliplr=0.5, flipud=0.0, format=torchscript, fraction=1.0, freeze=None, hsv_h=0.015, hsv_s=0.6, hsv_v=0.4, imgsz=640, iou=None, kobj=1.0, line_width=None, lr0=0.01, lrf=0.01, mask_ratio=4, max_det=300, mixup=0.05, mode=train, model=yolo11n.pt, momentum=0.937, mosaic=1.0, multi_scale=0.0, name=yolo11n_baseline_640, nbs=64, nms=None, opset=None, optimize=False, optimizer=auto, overlap_mask=True, patience=0, perspective=0.0, plots=True, pose=12.0, pretrained=True, profile=False, project=.\execucoes, quantize=None, rect=False, resume=False, retina_masks=False, rle=1.0, save=True, save_conf=False, save_crop=False, save_dir=.\execucoes\yolo11n_baseline_640, save_frames=False, save_json=False, save_period=-1, save_txt=False, scale=0.5, seed=42, shear=0.0, show=False, show_boxes=True, show_conf=True, show_labels=True, simplify=True, single_cls=False, source=None, split=val, stream_buffer=False, task=detect, tile=False, time=None, tracker=tracktrack.yaml, translate=0.1, val=True, verbose=True, vid_stride=1, visualize=False, warmup_bias_lr=0.1, warmup_epochs=3.0, warmup_momentum=0.8, weight_decay=0.0005, workers=2, workspace=None
+Overriding model.yaml nc=80 with nc=4
+                   from  n    params  module                                       arguments
+  0                  -1  1       464  ultralytics.nn.modules.conv.Conv             [3, 16, 3, 2]
+  1                  -1  1      4672  ultralytics.nn.modules.conv.Conv             [16, 32, 3, 2]
+  2                  -1  1      6640  ultralytics.nn.modules.block.C3k2            [32, 64, 1, False, 0.25]
+  3                  -1  1     36992  ultralytics.nn.modules.conv.Conv             [64, 64, 3, 2]
+  4                  -1  1     26080  ultralytics.nn.modules.block.C3k2            [64, 128, 1, False, 0.25]
+  5                  -1  1    147712  ultralytics.nn.modules.conv.Conv             [128, 128, 3, 2]
+  6                  -1  1     87040  ultralytics.nn.modules.block.C3k2            [128, 128, 1, True]
+  7                  -1  1    295424  ultralytics.nn.modules.conv.Conv             [128, 256, 3, 2]
+  8                  -1  1    346112  ultralytics.nn.modules.block.C3k2            [256, 256, 1, True]
+  9                  -1  1    164608  ultralytics.nn.modules.block.SPPF            [256, 256, 5]
+ 10                  -1  1    249728  ultralytics.nn.modules.block.C2PSA           [256, 256, 1]
+ 11                  -1  1         0  torch.nn.modules.upsampling.Upsample         [None, 2, 'nearest']
+ 12             [-1, 6]  1         0  ultralytics.nn.modules.conv.Concat           [1]
+ 13                  -1  1    111296  ultralytics.nn.modules.block.C3k2            [384, 128, 1, False]
+ 14                  -1  1         0  torch.nn.modules.upsampling.Upsample         [None, 2, 'nearest']
+ 15             [-1, 4]  1         0  ultralytics.nn.modules.conv.Concat           [1]
+ 16                  -1  1     32096  ultralytics.nn.modules.block.C3k2            [256, 64, 1, False]
+ 17                  -1  1     36992  ultralytics.nn.modules.conv.Conv             [64, 64, 3, 2]
+ 18            [-1, 13]  1         0  ultralytics.nn.modules.conv.Concat           [1]
+ 19                  -1  1     86720  ultralytics.nn.modules.block.C3k2            [192, 128, 1, False]
+ 20                  -1  1    147712  ultralytics.nn.modules.conv.Conv             [128, 128, 3, 2]
+ 21            [-1, 10]  1         0  ultralytics.nn.modules.conv.Concat           [1]
+ 22                  -1  1    378880  ultralytics.nn.modules.block.C3k2            [384, 256, 1, True]
+ 23        [16, 19, 22]  1    431452  ultralytics.nn.modules.head.Detect           [4, 16, None, [64, 128, 256]]
+YOLO11n summary: 181 layers, 2,590,620 parameters, 2,590,604 gradients, 6.5 GFLOPs
+Transferred 493/499 items from pretrained weights
+Freezing layer 'model.23.dfl.conv.weight'
+AMP: running Automatic Mixed Precision (AMP) checks...
+AMP: checks passed
+train: Fast image access  (ping: 0.0±0.0 ms, read: 918.3±494.4 MB/s, size: 76.1 KB)
+train: Scanning .\dados\dataset\train\labels.cache... 1754 images, 4 backgrounds, 0 corrupt: 100% ━━━━━━━━━━━━ 1754/1754  0.0s
+val: Fast image access  (ping: 0.0±0.0 ms, read: 1325.1±805.4 MB/s, size: 80.6 KB)
+val: Scanning .\dados\dataset\val\labels.cache... 501 images, 0 backgrounds, 0 corrupt: 100% ━━━━━━━━━━━━ 501/501  0.0s
+optimizer: 'optimizer=auto' found, ignoring 'lr0=0.01' and determining best 'optimizer' and 'lr0' automatically...
+optimizer: AdamW(lr=0.00125, momentum=0.9) with parameter groups 81 weight(decay=0.0), 88 weight(decay=0.0005), 87 bias(decay=0.0)
+Plotting labels to .\execucoes\yolo11n_baseline_640\labels.jpg...
+Using 1754 train, 501 val images for fraction=1.0 at imgsz=640
+Using 2 dataloader workers
+Logging results to .\execucoes\yolo11n_baseline_640
+Starting training for 20 epochs...
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+       1/20       4.2G      2.253      6.939      2.201         93        640: 0% ──────────── 0/55  7.1s
+                   all        501        859      0.225      0.235      0.138     0.0433
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+       2/20      5.35G      1.755      2.346      1.688        126        640: 0% ──────────── 0/55  0.2s
+                   all        501        859      0.289       0.35      0.228      0.081
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+       3/20      5.36G       1.77      2.298      1.727        106        640: 0% ──────────── 0/55  0.2s
+                   all        501        859      0.168      0.213        0.1     0.0286
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+       4/20      5.36G      1.772      2.342      1.753        115        640: 0% ──────────── 0/55  0.2s
+                   all        501        859      0.271      0.341        0.2     0.0694
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+       5/20      5.36G      1.841      2.484      1.859         78        640: 0% ──────────── 0/55  0.2s
+                   all        501        859      0.235      0.432      0.252     0.0962
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+                   all        501        859      0.385       0.37      0.289       0.11
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+                   all        501        859      0.401      0.458       0.36      0.147
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+       8/20      5.36G      1.582      1.978      1.611        108        640: 0% ──────────── 0/55  0.2s
+                   all        501        859      0.417      0.426      0.336      0.123
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+       9/20      5.36G      1.695      2.106      1.711        109        640: 0% ──────────── 0/55  0.2s
+                   all        501        859      0.402      0.419      0.336      0.129
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+      10/20      5.36G      1.457      1.816      1.565         88        640: 0% ──────────── 0/55  0.2s
+                   all        501        859      0.548      0.466       0.44      0.204
+Closing dataloader mosaic
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+      11/20      5.36G        1.4        1.5      1.523         53        640: 0% ──────────── 0/55  5.4s
+                   all        501        859      0.539      0.471      0.476      0.203
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+      12/20      5.36G      1.476      1.756      1.703         49        640: 0% ──────────── 0/55  0.2s
+                   all        501        859      0.527      0.524      0.511      0.222
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+      13/20      5.36G      1.355      1.533      1.555         44        640: 0% ──────────── 0/55  0.2s
+                   all        501        859      0.589      0.526      0.538      0.257
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+      14/20      5.36G      1.603      1.548      1.649         51        640: 0% ──────────── 0/55  0.2s
+                   all        501        859      0.678      0.565      0.561      0.272
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+      15/20      5.36G      1.373        1.4      1.499         45        640: 0% ──────────── 0/55  0.2s
+                   all        501        859       0.64      0.561      0.587        0.3
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+      16/20      5.36G      1.374      1.409      1.525         53        640: 0% ──────────── 0/55  0.2s
+                   all        501        859      0.682      0.581      0.594      0.315
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+      17/20      5.36G      1.418      1.291      1.512         50        640: 0% ──────────── 0/55  0.2s
+                   all        501        859      0.677      0.598      0.613      0.337
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+      18/20      5.36G      1.411      1.231      1.561         52        640: 0% ──────────── 0/55  0.2s
+                   all        501        859      0.738      0.585      0.633      0.341
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+      19/20      5.36G      1.315      1.339      1.391         49        640: 0% ──────────── 0/55  0.2s
+                   all        501        859      0.724      0.613      0.631       0.34
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+      20/20      5.36G      1.029     0.9408       1.29         38        640: 0% ──────────── 0/55  0.2s
+                   all        501        859      0.773      0.622      0.664      0.367
+20 epochs completed in 0.074 hours.
+Optimizer stripped from .\execucoes\yolo11n_baseline_640\weights\last.pt, 5.5MB
+Optimizer stripped from .\execucoes\yolo11n_baseline_640\weights\best.pt, 5.5MB
+Validating .\execucoes\yolo11n_baseline_640\weights\best.pt...
+Ultralytics 8.4.208  Python-3.12.10 torch-2.14.1+cu130 CUDA:0 (NVIDIA GeForce RTX 4080, 16376MiB)
+YOLO11n summary (fused): 101 layers, 2,597,780 parameters, 0 gradients, 6.4 GFLOPs
+                   all        501        859      0.768      0.621      0.665      0.367
+                buraco        286        572      0.729      0.573      0.602      0.321
+       piso_danificado        215        287      0.808      0.669      0.728      0.412
+Speed: 0.1ms preprocess, 0.9ms inference, 0.0ms loss, 1.2ms postprocess per image
+Results saved to .\execucoes\yolo11n_baseline_640
+=== Pronto ===
+{
+  "nome": "yolo11n_baseline_640",
+  "pre_treino": "COCO",
+  "familia": "yolo11",
+  "modelo": "n",
+  "preset": "baseline",
+  "epocas_pedidas": 20,
+  "imgsz": 640,
+  "batch": 32,
+  "device": "0",
+  "duracao_min": 4.6,
+  "epocas_rodadas": 20,
+  "melhor_epoca": 20,
+  "val_mAP50": 0.6644,
+  "val_mAP50_95": 0.367,
+  "val_precisao": 0.7726,
+  "val_recall": 0.6216,
+  "gpu": "NVIDIA GeForce RTX 4080"
+}
+Próximo: python scripts/06_avaliar.py --nome yolo11n_baseline_640

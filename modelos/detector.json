@@ -1,0 +1,17 @@
+{
+  "nome": "yolo11s_final_640",
+  "classes": [
+    "buraco",
+    "piso_danificado",
+    "obstaculo",
+    "veiculo_na_calcada"
+  ],
+  "imgsz": 640,
+  "exportado_em": "2026-11-08T18:25:06+00:00",
+  "metricas_teste": {
+    "mAP50": 0.6787,
+    "mAP50_95": 0.4186,
+    "precisao": 0.7638,
+    "recall": 0.6601
+  }
+}

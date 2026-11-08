@@ -51,7 +51,7 @@ pip install -r requirements.txt
 pip install -r requirements-dev.txt
 python -c "import torch; print(torch.__version__, torch.cuda.is_available())"  # tem de sair True
 python scripts/00_verificar_ambiente.py
-python -m pytest -q                  # 18 testes do serviço devem passar
+python -m pytest -q                  # 21 testes devem passar
 ```
 
 Escolha o interpretador `.venv` no VS Code (`Ctrl+Shift+P` → **Python: Select Interpreter**).
@@ -69,6 +69,12 @@ O `00_verificar_ambiente.py` mostra a GPU, a VRAM e o batch sugerido.
 5. `python scripts/01_importar_publicos.py`
 
 A tabela `resultados/tabela_datasets.md` vai direto para o PDF.
+
+**Sem login no Roboflow:** `python scripts/01a_baixar_publicos.py` baixa e converte quatro
+datasets abertos (rachaduras da Ultralytics e três de buracos do Hugging Face), remove imagens
+repetidas e rótulos corrompidos e deixa tudo pronto para o `01`. Os blocos já estão ativos em
+`config/datasets.yaml`. Eles só cobrem `buraco` e `piso_danificado`, e algumas fotos de buraco
+têm marca d'água de banco de imagens: confira a licença antes de publicar imagens deles.
 
 ## 3. Fotos próprias e LGPD
 

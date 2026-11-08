@@ -1,0 +1,19 @@
+{
+  "nome": "yolo11n_final_640",
+  "pre_treino": "COCO",
+  "familia": "yolo11",
+  "modelo": "n",
+  "preset": "final",
+  "epocas_pedidas": 100,
+  "imgsz": 640,
+  "batch": 32,
+  "device": "0",
+  "duracao_min": 20.9,
+  "epocas_rodadas": 100,
+  "melhor_epoca": 100,
+  "val_mAP50": 0.6776,
+  "val_mAP50_95": 0.4243,
+  "val_precisao": 0.745,
+  "val_recall": 0.6457,
+  "gpu": "NVIDIA GeForce RTX 4080"
+}

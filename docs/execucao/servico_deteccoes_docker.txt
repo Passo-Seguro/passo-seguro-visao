@@ -1,0 +1,13 @@
+# Container ghcr.io/passo-seguro/passo-seguro-visao:local (531MB, ONNX Runtime em CPU, 2 threads)
+
+$ GET /saude
+{"status":"ok","modelo":"yolo11s_final_640","classes":["buraco","piso_danificado","obstaculo","veiculo_na_calcada"],"limiar_confianca":0.4,"metricas_teste":{"mAP50":0.6787,"mAP50_95":0.4186,"precisao":0.7638,"recall":0.6601}}
+
+$ POST /deteccoes sem token
+{"codigo":"nao_autenticado","mensagem":"Token ausente ou inválido."} [HTTP 401]
+
+$ POST /deteccoes rupesh-pothole__Pothole-018x.rf.cf25b677c96602b57eb1b9623cf121f6.jpg
+[{"classe":"buraco","confianca":0.805,"caixa":{"x":0.3331,"y":0.4182,"largura":0.3729,"altura":0.2552}},{"classe":"buraco","confianca":0.7028,"caixa":{"x":0.4035,"y":0.1086,"largura":0.2167,"altura":0.0748}}] [HTTP 200 em 0.086371s]
+healthcheck: healthy
+{"evento": "modelo_carregado", "modelo": "yolo11s_final_640"}
+{"evento": "deteccao", "bytes": 160032, "largura": 640, "altura": 640, "n": 2, "ms": 83.6}
