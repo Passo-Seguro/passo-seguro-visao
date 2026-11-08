@@ -1,0 +1,44 @@
+# Datasets públicos (Roboflow Universe) usados no treino.
+#
+# Para cada dataset:
+#   1. No Roboflow Universe, abra o projeto e confira a LICENÇA (aparece na página do dataset).
+#      Use só licenças que permitem reuso: CC BY 4.0, CC0/Public Domain, MIT. Evite "CC BY-NC"
+#      se o produto for comercial (o pitch prevê receita) e qualquer uma sem licença declarada.
+#   2. Download Dataset -> formato "YOLOv8" (ou YOLOv11) -> "Download zip to computer".
+#   3. Descompacte em dados/brutos/publicos/<pasta>/  (deve ter data.yaml e train/ valid/ test/).
+#   4. Preencha um bloco abaixo. `remapear` liga o nome da classe NO DATASET a uma das 4 classes
+#      do contrato (buraco, piso_danificado, obstaculo, veiculo_na_calcada) ou a `descartar`
+#      (a caixa some, a imagem fica). Classe que não estiver na lista = erro (para não esquecer).
+#   5. Rode:  python scripts/01_importar_publicos.py
+#
+# Os blocos abaixo são EXEMPLOS de formato: troque nome, url e licença pelos que você baixou.
+
+datasets:
+  - pasta: exemplo-buracos
+    nome: Exemplo - Pothole detection
+    url: https://universe.roboflow.com/<workspace>/<projeto>
+    licenca: CC BY 4.0
+    ativo: false            # true quando a pasta existir
+    remapear:
+      pothole: buraco
+      potholes: buraco
+
+  - pasta: exemplo-calcadas
+    nome: Exemplo - Sidewalk defects
+    url: https://universe.roboflow.com/<workspace>/<projeto>
+    licenca: CC BY 4.0
+    ativo: false
+    remapear:
+      crack: piso_danificado
+      broken-tile: piso_danificado
+      uneven: piso_danificado
+      hole: buraco
+      obstacle: obstaculo
+      pole: obstaculo
+      trash: obstaculo
+      car: veiculo_na_calcada
+      motorcycle: veiculo_na_calcada
+      person: descartar
+
+# Teto de imagens importadas por dataset (evita que um dataset enorme engula as fotos de SP).
+max_imagens_por_dataset: 1500

@@ -1,0 +1,5 @@
+-r requirements-servico.txt
+pytest>=8.2
+httpx>=0.27
+onnx>=1.16
+jsonschema>=4.22
