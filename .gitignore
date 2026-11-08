@@ -228,7 +228,7 @@ secrets.h
 # --- Passo Seguro / visão ---
 # Fotos e datasets ficam fora do git (pesados; fotos próprias só são publicadas depois do checar_lgpd)
 dados/*
-!dados/README.md
+!dados/.gitkeep
 execucoes/
 modelos/pesos/
 *.pt

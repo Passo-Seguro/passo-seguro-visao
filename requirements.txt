@@ -1,5 +1,5 @@
 # Treino, avaliação, preparação de dados e tempo real (no seu PC).
-# ANTES deste arquivo, instale o PyTorch com CUDA (ver PASSO_A_PASSO.md, passo 1).
+# ANTES deste arquivo, instale o PyTorch com CUDA (ver README.md, seção 4).
 ultralytics>=8.3.0,<9
 opencv-python>=4.9
 onnx>=1.16

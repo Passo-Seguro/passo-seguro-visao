@@ -160,7 +160,7 @@ def main() -> int:
     print("\n" + "\n".join(linhas))
     print(f"\nTabela para o PDF: {RESULTADOS / 'comparacao.md'}")
     if resultados and max(r["mAP50"] for r in resultados) < 0.5:
-        print("\nmAP50 abaixo de 0,5: veja o plano B no PASSO_A_PASSO.md (3 classes, mais dados, mais augmentation).")
+        print("\nmAP50 abaixo de 0,5: veja o plano B no README.md, seção 6.6 (3 classes, mais dados, mais augmentation).")
     return 0
 
 

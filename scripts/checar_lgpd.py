@@ -3,7 +3,7 @@
     python scripts/checar_lgpd.py [pasta]   (padrão: dados/dataset e dados/intermediario/proprias)
 
 Sai com código 1 se achar alguma foto com GPS. Rostos e placas são conferidos a olho
-(ver PASSO_A_PASSO.md, passo 3).
+(ver README.md, seção 6.2).
 """
 
 import sys

@@ -21,7 +21,7 @@ def main() -> int:
     try:
         import torch
     except ImportError:
-        print("PyTorch não instalado. Veja o passo 1 do PASSO_A_PASSO.md.")
+        print("PyTorch não instalado. Veja a seção 4 do README.md.")
         return 1
     print(f"torch {torch.__version__}")
     if torch.cuda.is_available():
@@ -37,7 +37,7 @@ def main() -> int:
         print(f"Sugestão de treino: {sug}")
     elif "+cpu" in torch.__version__ or torch.version.cuda is None:
         print("PyTorch SEM suporte a CUDA (versão só-CPU).")
-        print("Se você tem placa NVIDIA, reinstale com o índice CUDA (passo 1 do PASSO_A_PASSO.md):")
+        print("Se você tem placa NVIDIA, reinstale com o índice CUDA (seção 4 do README.md):")
         print("  pip install torch torchvision --index-url https://download.pytorch.org/whl/cu130")
         print("Sem GPU o treino funciona, mas o de 100 épocas pode levar horas: use --modelo n e --imgsz 512.")
     else:
