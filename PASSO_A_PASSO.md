@@ -42,11 +42,14 @@ python -m venv .venv
 python -m pip install --upgrade pip
 
 # PyTorch COM CUDA primeiro (senão o pip instala a versão só-CPU):
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu130
+# cu130 exige driver NVIDIA 580 ou mais novo; com driver antigo use .../whl/cu126.
+# (o índice cu124 parou no torch 2.6: o pip troca por uma versão só-CPU mais nova.)
 # sem placa NVIDIA:  pip install torch torchvision
 
 pip install -r requirements.txt
 pip install -r requirements-dev.txt
+python -c "import torch; print(torch.__version__, torch.cuda.is_available())"  # tem de sair True
 python scripts/00_verificar_ambiente.py
 python -m pytest -q                  # 18 testes do serviço devem passar
 ```

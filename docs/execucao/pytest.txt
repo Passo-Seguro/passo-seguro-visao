@@ -1,0 +1,27 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- ./.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: ./
+plugins: anyio-4.16.0
+collecting ... collected 18 items
+
+tests/test_caixas.py::test_centro_para_canto_superior_esquerdo PASSED    [  5%]
+tests/test_caixas.py::test_contrato_normaliza_e_prende_entre_0_e_1 PASSED [ 11%]
+tests/test_caixas.py::test_iou PASSED                                    [ 16%]
+tests/test_caixas.py::test_nms_tira_sobreposta PASSED                    [ 22%]
+tests/test_caixas.py::test_parear_classifica_erros PASSED                [ 27%]
+tests/test_classes.py::test_ordem_igual_ao_contrato PASSED               [ 33%]
+tests/test_classes.py::test_toda_classe_tem_rotulo_e_cor PASSED          [ 38%]
+tests/test_detector.py::test_detector_onnx_desfaz_letterbox PASSED       [ 44%]
+tests/test_servico.py::test_200_no_formato_do_contrato PASSED            [ 50%]
+tests/test_servico.py::test_png_tambem PASSED                            [ 55%]
+tests/test_servico.py::test_401_sem_token_ou_token_errado PASSED         [ 61%]
+tests/test_servico.py::test_413_acima_de_10_mb PASSED                    [ 66%]
+tests/test_servico.py::test_422_imagem_ilegivel PASSED                   [ 72%]
+tests/test_servico.py::test_422_tipo_nao_aceito PASSED                   [ 77%]
+tests/test_servico.py::test_400_sem_o_campo_imagem PASSED                [ 83%]
+tests/test_servico.py::test_503_sem_modelo PASSED                        [ 88%]
+tests/test_servico.py::test_saude_e_metricas PASSED                      [ 94%]
+tests/test_servico.py::test_lista_vazia_quando_nada_passa_do_limiar PASSED [100%]
+
+============================= 18 passed in 1.38s ==============================

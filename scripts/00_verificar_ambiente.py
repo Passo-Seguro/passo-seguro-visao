@@ -38,7 +38,7 @@ def main() -> int:
     elif "+cpu" in torch.__version__ or torch.version.cuda is None:
         print("PyTorch SEM suporte a CUDA (versão só-CPU).")
         print("Se você tem placa NVIDIA, reinstale com o índice CUDA (passo 1 do PASSO_A_PASSO.md):")
-        print("  pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124")
+        print("  pip install torch torchvision --index-url https://download.pytorch.org/whl/cu130")
         print("Sem GPU o treino funciona, mas o de 100 épocas pode levar horas: use --modelo n e --imgsz 512.")
     else:
         print("PyTorch tem CUDA, mas nenhuma GPU foi encontrada. Confira o driver da NVIDIA (nvidia-smi).")

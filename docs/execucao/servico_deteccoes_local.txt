@@ -1,0 +1,25 @@
+# Serviço /deteccoes rodando com o ONNX FALSO dos testes (não é o modelo treinado)
+
+$ GET /saude
+{"status":"ok","modelo":null,"classes":["buraco","piso_danificado","obstaculo","veiculo_na_calcada"],"limiar_confianca":0.4,"metricas_teste":null}
+
+$ POST /deteccoes sem token
+{"codigo":"nao_autenticado","mensagem":"Token ausente ou inválido."} [HTTP 401]
+
+$ POST /deteccoes foto 800x600
+[{"classe":"buraco","confianca":0.91,"caixa":{"x":0.4219,"y":0.4479,"largura":0.1562,"altura":0.1042}},{"classe":"piso_danificado","confianca":0.7,"caixa":{"x":0.7188,"y":0.5833,"largura":0.125,"altura":0.1667}}] [HTTP 200 em 0.031382s]
+
+$ POST /deteccoes arquivo ilegível
+{"codigo":"dados_invalidos","mensagem":"Não foi possível ler a imagem.","detalhes":[{"campo":"imagem","problema":"imagem ilegível"}]} [HTTP 422]
+
+$ GET /metrics
+# TYPE visao_requisicoes_total counter
+visao_requisicoes_total{rota="/deteccoes",status="200"} 1
+visao_requisicoes_total{rota="/deteccoes",status="401"} 1
+visao_requisicoes_total{rota="/deteccoes",status="422"} 1
+# TYPE visao_deteccoes_total counter
+visao_deteccoes_total{classe="buraco"} 1
+visao_deteccoes_total{classe="piso_danificado"} 1
+visao_latencia_segundos{quantil="0.5"} 0.0292
+visao_latencia_segundos{quantil="0.95"} 0.0617
+visao_latencia_segundos{quantil="0.99"} 0.0617

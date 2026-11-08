@@ -35,7 +35,7 @@ O passo a passo completo, treinando na GPU do seu PC, está em **[PASSO_A_PASSO.
 Resumo:
 
 ```bash
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu130
 pip install -r requirements.txt -r requirements-dev.txt
 python scripts/00_verificar_ambiente.py
 python scripts/01_importar_publicos.py        # datasets do Roboflow -> 4 classes
