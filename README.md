@@ -389,8 +389,19 @@ O `08` confere o ONNX contra o PyTorch em 5 imagens. Commite `modelos/detector.o
 
 ### 6.8 Entrega
 
-O PDF segue [`docs/relatorio.md`](docs/relatorio.md) e o vídeo, [`docs/roteiro-video.md`](docs/roteiro-video.md);
-os números saem de `resultados/`. Antes do push:
+O relatório está em [`docs/relatorio.md`](docs/relatorio.md), já no PDF que vai para o Teams:
+[`docs/relatorio.pdf`](docs/relatorio.pdf). Depois de editar o Markdown (por exemplo, para pôr o
+link do vídeo), gere o PDF de novo:
+
+```powershell
+python -m playwright install chromium     # uma vez
+python scripts/gerar_relatorio_pdf.py     # docs/relatorio.md -> docs/relatorio.pdf
+```
+
+O vídeo de demonstração (2min07s) é montado a partir das saídas reais: o `10_tempo_real.py` e uma
+chamada ao `POST /deteccoes` pelo Swagger. Ele fica em `docs/video/` (fora do git, como todo
+`.mp4`) e vai para o YouTube como não listado. O roteiro para uma versão narrada está em
+[`docs/roteiro-video.md`](docs/roteiro-video.md). Antes do push:
 
 ```powershell
 python scripts/checar_lgpd.py      # nenhuma foto com GPS
