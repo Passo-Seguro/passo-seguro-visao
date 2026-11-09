@@ -110,7 +110,7 @@ pip install -r requirements/base.txt
 pip install -r requirements/dev.txt
 python -c "import torch; print(torch.__version__, torch.cuda.is_available())"   # tem de sair True
 python scripts/00_verificar_ambiente.py   # mostra a GPU, a VRAM e o batch sugerido
-python -m pytest -q                       # 21 testes
+python -m pytest -q                       # 22 testes
 ```
 
 No VS Code, escolha o interpretador `.venv` (`Ctrl+Shift+P` → **Python: Select Interpreter**).
@@ -121,7 +121,83 @@ O serviço recebe a foto de um relato e devolve os problemas encontrados, com cl
 posição. O contrato é o do [`openapi.yaml`](https://github.com/Passo-Seguro/passo-seguro/blob/main/openapi.yaml)
 do repositório principal (operação `detectarProblemas`).
 
-### 5.1 Subir o serviço
+### 5.1 Serviço no ar (Railway)
+
+O serviço está publicado em **https://visao-production-e222.up.railway.app**, no mesmo projeto do
+Railway do assistente (`passo-seguro-genai`, serviço `visao`).
+
+| Rota | Autenticação | Para quê |
+|---|---|---|
+| `POST /deteccoes` | `Authorization: Bearer <VISAO_TOKEN>` | foto do relato (`multipart/form-data`, campo `imagem`) → lista de detecções (contrato na seção 5.3) |
+| `GET /saude` | não | modelo carregado e métricas de teste |
+| `GET /docs` | não | Swagger: [abrir](https://visao-production-e222.up.railway.app/docs) |
+| `GET /metrics` | não | requisições, detecções por classe e latência p50/p95/p99 (Prometheus) |
+
+**Token:** fica com a equipe, fora do git; quem tem acesso ao projeto lê com
+`railway variables --service visao`. Para a API principal: `VISAO_URL=https://visao-production-e222.up.railway.app`
+e o mesmo `VISAO_TOKEN`.
+
+**Primeira chamada (PowerShell 7 ou curl):**
+
+```powershell
+$url = "https://visao-production-e222.up.railway.app"
+Invoke-RestMethod "$url/saude"
+curl.exe -H "Authorization: Bearer <VISAO_TOKEN>" -F "imagem=@foto.jpg;type=image/jpeg" "$url/deteccoes"
+```
+
+**Como foi publicado:**
+
+```powershell
+railway link --project <id do projeto passo-seguro-genai> --environment production
+railway add --service visao
+railway variables --service visao --set "RAILWAY_DOCKERFILE_PATH=deploy/Dockerfile" `
+  --set "VISAO_TOKEN=<token>" --set "ONNX_THREADS=4"
+railway domain --service visao --port 8000
+railway up --service visao --detach
+```
+
+- O [`.railwayignore`](.railwayignore) envia só o que o `deploy/Dockerfile` usa: a pasta tem ~1,4 GB de
+  dados e treinos fora do git. O modelo (`modelos/detector.onnx`, 38 MB) vai junto.
+- `ONNX_THREADS=4`: o container enxerga os 48 núcleos da máquina física; com o padrão (todos), o
+  ONNX Runtime levava **0,71 s** por foto dentro do servidor. Com 4 threads, **0,053 s** (p50).
+- Porta fixa 8000 no `CMD` da imagem; o domínio aponta para ela.
+
+**Validação de ponta a ponta** ([`scripts/11_testar_servico.py`](scripts/11_testar_servico.py)),
+pelo HTTP, como a API principal chama; o token não aparece na saída:
+
+```powershell
+$env:VISAO_URL="https://visao-production-e222.up.railway.app"; $env:VISAO_TOKEN="<token>"
+python scripts/11_testar_servico.py --saida docs/execucao/servico_railway_e2e.txt
+```
+
+Resultado em 09/11/2026 ([`servico_railway_e2e.txt`](docs/execucao/servico_railway_e2e.txt)):
+
+| Checagem | Resultado |
+|---|---|
+| `GET /saude` 200 com o modelo `yolo11s_final_640`; `GET /docs` 200 | ✅ |
+| Sem token e com token errado → 401; sem o campo `imagem` → 400 | ✅ |
+| Arquivo de texto e JPEG corrompido → 422; acima de 10 MB → 413 | ✅ |
+| Imagem lisa, sem calçada → 200 e lista vazia; JSON com `charset=utf-8` | ✅ |
+| 30 fotos do conjunto de teste → 200 no schema do contrato | ✅ 30/30 |
+| **Resposta do serviço igual à do modelo ONNX local** (mesmo modelo no ar) | ✅ 30/30 |
+| Fotos com problema em que o serviço achou ao menos uma classe do gabarito | 26 de 29 |
+| Tempo por foto, com a rede | mediana 0,21 s · máximo 0,25 s (timeout da API: 5 s) |
+| Tempo do modelo no servidor (`/metrics`) | p50 0,053 s · p95 0,087 s |
+
+![saude no railway](docs/prints/14_railway_saude.png)
+
+![deteccoes no railway](docs/prints/15_railway_deteccoes.png)
+
+Sem token, 401:
+
+![401 no railway](docs/prints/16_railway_sem_token_401.png)
+
+![validacao](docs/prints/17_railway_validacao.png)
+
+Os cabeçalhos da resposta (`server: railway-hikari`, `x-railway-edge: grul`) mostram que quem
+respondeu foi o Railway.
+
+### 5.2 Subir o serviço
 
 **Local:**
 
@@ -144,11 +220,11 @@ A documentação interativa (Swagger) fica em <http://localhost:8001/docs>:
 
 **Integração com a API principal** (a combinar com a Júlia):
 
-- Na API, configure `VISAO_URL=http://<host-do-servico>:8000` e o mesmo `VISAO_TOKEN`.
+- Na API, configure `VISAO_URL=https://visao-production-e222.up.railway.app` (seção 5.1) e o mesmo `VISAO_TOKEN`.
 - No `infra/apps.tf` ainda não há Container App para a visão. É preciso criar um com ingress
   interno, `min_replicas = 1` (a partida a frio passa dos 5 s de timeout da API) e 1 vCPU / 2 GB.
 
-### 5.2 Contrato
+### 5.3 Contrato
 
 **Requisição:** `multipart/form-data` com o campo `imagem` (JPEG ou PNG, até 10 MB) e o cabeçalho
 `Authorization: Bearer <VISAO_TOKEN>`.
@@ -174,7 +250,7 @@ A foto é lida com a orientação do EXIF aplicada; os metadados não são guard
 
 ![resposta da API desenhada](docs/prints/05_resposta_da_api_desenhada.jpg)
 
-### 5.3 Exemplos de chamada
+### 5.4 Exemplos de chamada
 
 **curl:**
 
@@ -239,7 +315,7 @@ Chamadas reais ao serviço (local e container):
 
 ![container](docs/prints/13_container_visao.png)
 
-### 5.4 Erros, saúde e métricas
+### 5.5 Erros, saúde e métricas
 
 Todos os erros usam o formato `{"codigo", "mensagem", "detalhes"?}`.
 
@@ -261,7 +337,7 @@ automática.
   p95 e p99). Se `METRICS_TOKEN` estiver definido, pede esse token.
 - **Log:** JSON, uma linha por detecção, só com tamanho, quantidade e tempo (nada da imagem).
 
-### 5.5 Configuração
+### 5.6 Configuração
 
 | Variável | Padrão | Para quê |
 |---|---|---|
@@ -274,7 +350,7 @@ automática.
 | `METRICS_TOKEN` | vazio | protege o `GET /metrics` |
 | `NIVEL_LOG` | INFO | nível do log |
 
-### 5.6 Tempo real (webcam ou vídeo)
+### 5.7 Tempo real (webcam ou vídeo)
 
 ```powershell
 python scripts/10_tempo_real.py --fonte 0                                                  # webcam
@@ -410,7 +486,7 @@ python -m pytest -q
 
 ## 7. Testes
 
-**21 testes, todos passando.** Conferem o serviço, o pós-processamento e a preparação dos dados
+**22 testes, todos passando.** Conferem o serviço, o pós-processamento e a preparação dos dados
 sem GPU e sem modelo treinado: um ONNX falso, com a mesma interface do YOLO exportado, é gerado
 na hora ([`tests/conftest.py`](tests/conftest.py)).
 
@@ -435,6 +511,7 @@ em [`docs/execucao/relatorio_testes.html`](docs/execucao/relatorio_testes.html).
 | | `test_422_tipo_nao_aceito` | tipo diferente de JPEG/PNG → 422 |
 | | `test_400_sem_o_campo_imagem` | multipart sem `imagem` → 400 |
 | | `test_503_sem_modelo` | sem modelo, `/saude` e `/deteccoes` → 503 (o serviço sobe mesmo assim) |
+| | `test_json_declara_charset_utf8` | toda resposta JSON sai com `charset=utf-8` (o PowerShell 5.1 lê os acentos certo) |
 | | `test_saude_e_metricas` | `/saude` mostra o limiar; `/metrics` conta requisições e detecções |
 | | `test_lista_vazia_quando_nada_passa_do_limiar` | nada acima de 0,4 → `[]` |
 | `test_detector.py` | `test_detector_onnx_desfaz_letterbox` | caixas voltam para a escala da foto; limiar e NMS aplicados |
@@ -554,6 +631,7 @@ O ONNX bateu com o PyTorch nas 5 imagens conferidas ([`08_exportar_onnx.txt`](do
 |---|---|
 | Local (`uvicorn`) | [`servico_deteccoes_local.txt`](docs/execucao/servico_deteccoes_local.txt): 401, 15 buracos numa foto em 71 ms, 422 para texto |
 | Docker (531 MB) | [`servico_deteccoes_docker.txt`](docs/execucao/servico_deteccoes_docker.txt): 2 buracos em 86 ms, healthcheck `healthy` |
+| **Railway, URL pública** | [`servico_railway_e2e.txt`](docs/execucao/servico_railway_e2e.txt): todas as checagens do contrato, 30/30 respostas iguais ao modelo local, 0,21 s por foto (seção 5.1) |
 
 **Tempo real:** sem vídeo de caminhada, o `10_tempo_real.py` rodou sobre um slideshow de 30
 fotos de teste: **31,2 FPS em CPU** ([`10_tempo_real.txt`](docs/execucao/10_tempo_real.txt)). Este
@@ -567,7 +645,7 @@ não é o vídeo de entrega.
 | Anotação, incluindo `obstaculo` e `veiculo_na_calcada` | equipe |
 | Retreinar com as fotos de SP e repetir os passos 6.4 a 6.7 | qualquer um |
 | Conferir as licenças dos datasets de buraco | equipe |
-| Vídeo de caminhada real e PDF | equipe |
+| Vídeo de caminhada real (o vídeo de demonstração e o PDF já estão prontos) | equipe |
 
 ## 9. Dados, licenças e LGPD
 

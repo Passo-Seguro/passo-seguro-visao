@@ -16,18 +16,24 @@ from __future__ import annotations
 import hmac
 import json
 import logging
+import sys
 import time
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request, UploadFile
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse, PlainTextResponse
+from fastapi.responses import JSONResponse as _JSONResponse, PlainTextResponse
 from PIL import UnidentifiedImageError
 
 from servico.config import Config
 from visao.classes import carregar_classes
 from visao.detector_onnx import DetectorOnnx, carregar_metadados
 from visao.imagens import abrir_rgb
+
+
+class JSONResponse(_JSONResponse):
+    # sem o charset, o Invoke-RestMethod do Windows PowerShell 5.1 lê o corpo como latin-1 ("calÃ§ada")
+    media_type = "application/json; charset=utf-8"
 
 log = logging.getLogger("passo_seguro.visao")
 TIPOS_ACEITOS = {"image/jpeg", "image/jpg", "image/png"}
@@ -77,7 +83,8 @@ def criar_app(config: Config | None = None, detector=None) -> FastAPI:
 
     @asynccontextmanager
     async def ciclo(app: FastAPI):
-        logging.basicConfig(level=config.nivel_log, format="%(message)s")
+        # stdout: o Railway (e outros) marca tudo o que sai no stderr como erro
+        logging.basicConfig(level=config.nivel_log, format="%(message)s", stream=sys.stdout)
         if estado["detector"] is None:
             try:
                 import onnxruntime as ort
@@ -99,7 +106,7 @@ def criar_app(config: Config | None = None, detector=None) -> FastAPI:
         yield
 
     app = FastAPI(title="Passo Seguro — Visão", version="1.0.0", lifespan=ciclo,
-                  docs_url="/docs", redoc_url=None)
+                  docs_url="/docs", redoc_url=None, default_response_class=JSONResponse)
 
     @app.exception_handler(RequestValidationError)
     async def _validacao(request: Request, exc: RequestValidationError):
