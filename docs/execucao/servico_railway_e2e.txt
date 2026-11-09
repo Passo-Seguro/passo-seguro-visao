@@ -1,0 +1,66 @@
+# Validação de ponta a ponta do serviço de visão: https://visao-production-e222.up.railway.app
+# 2026-11-09 22:54 UTC · token omitido
+
+## 1. Contrato
+[OK] GET /saude → 200 com o modelo carregado  (modelo yolo11s_final_640, mAP50 de teste 0.6787)
+[OK] GET /docs (Swagger) → 200
+[OK] sem token → 401 nao_autenticado
+[OK] token errado → 401
+[OK] sem o campo imagem → 400 requisicao_invalida
+[OK] arquivo de texto → 422 dados_invalidos
+[OK] JPEG corrompido → 422
+[OK] arquivo acima de 10 MB → 413 arquivo_grande
+[OK] imagem lisa, sem calçada → 200 e lista vazia  ([])
+[OK] JSON com charset=utf-8  (application/json; charset=utf-8)
+
+## 2. Fotos do conjunto de teste (nunca usadas no treino)
+  200  0.22s  gabarito=['piso_danificado']              serviço= 1 det ['piso_danificado']              = local  crack-seg__2316x.rf.ce4aa8b033555eab532c
+  200  0.20s  gabarito=['piso_danificado']              serviço= 1 det ['piso_danificado']              = local  crack-seg__3558x.rf.4c873a12968c4c4b5864
+  200  0.21s  gabarito=['buraco']                       serviço= 1 det ['buraco']                       = local  rupesh-pothole__Pothole-117x.rf.80cce6b1
+  200  0.20s  gabarito=[]                               serviço= 1 det ['buraco']                       = local  manot-pothole__images201x.rf.087f12a0380
+  200  0.21s  gabarito=['buraco']                       serviço= 2 det ['buraco']                       = local  manot-pothole__images151x.rf.51e2e931039
+  200  0.21s  gabarito=['buraco']                       serviço= 0 det []                               = local  rupesh-pothole__Pothole-615x.rf.ff37fb85
+  200  0.19s  gabarito=['piso_danificado']              serviço= 1 det ['piso_danificado']              = local  crack-seg__1822x.rf.bd0e7633f68e790a12ba
+  200  0.20s  gabarito=['buraco']                       serviço= 1 det ['buraco']                       = local  rupesh-pothole__Pothole-027x.rf.bf6feb54
+  200  0.20s  gabarito=['buraco']                       serviço= 1 det ['buraco']                       = local  rupesh-pothole__Pothole-215x.rf.e8cfb570
+  200  0.22s  gabarito=['buraco']                       serviço= 4 det ['buraco']                       = local  rupesh-pothole__Pothole-357x.rf.d7227815
+  200  0.19s  gabarito=['piso_danificado']              serviço= 2 det ['piso_danificado']              = local  crack-seg__1667x.rf.42e5e081d4295f32d300
+  200  0.25s  gabarito=['piso_danificado']              serviço= 1 det ['piso_danificado']              = local  crack-seg__2400x.rf.e2dbfc7baf8e55f3ee71
+  200  0.20s  gabarito=['piso_danificado']              serviço= 1 det ['piso_danificado']              = local  crack-seg__1857x.rf.62b5e8c3bdf0aec6d109
+  200  0.23s  gabarito=['buraco']                       serviço= 7 det ['buraco']                       = local  rupesh-pothole__img-634x.rf.42a8d2e2573d
+  200  0.21s  gabarito=['buraco']                       serviço= 1 det ['buraco']                       = local  rupesh-pothole__Pothole-305x.rf.a4b41e47
+  200  0.23s  gabarito=['buraco']                       serviço= 3 det ['buraco']                       = local  rupesh-pothole__Pothole-253x.rf.28fc54a5
+  200  0.21s  gabarito=['buraco']                       serviço= 2 det ['buraco']                       = local  rupesh-pothole__Pothole-018x.rf.cf25b677
+  200  0.21s  gabarito=['piso_danificado']              serviço= 0 det []                               = local  crack-seg__1927x.rf.f561739a6a6c60b0d672
+  200  0.20s  gabarito=['piso_danificado']              serviço= 3 det ['piso_danificado']              = local  crack-seg__776x.rf.ed98cde6b2a7041477e77
+  200  0.20s  gabarito=['buraco']                       serviço= 2 det ['buraco']                       = local  keremberke-pothole__img_0032x.rf.a8a00b3
+  200  0.21s  gabarito=['buraco']                       serviço= 1 det ['buraco']                       = local  rupesh-pothole__Pothole-252x.rf.cd027b50
+  200  0.20s  gabarito=['buraco']                       serviço= 1 det ['buraco']                       = local  rupesh-pothole__Pothole-590x.rf.0df35964
+  200  0.20s  gabarito=['piso_danificado']              serviço= 1 det ['piso_danificado']              = local  crack-seg__2567x.rf.97df395b7eeb50a55549
+  200  0.21s  gabarito=['piso_danificado']              serviço= 1 det ['piso_danificado']              = local  crack-seg__2106x.rf.39ffdec31ac3007bce4a
+  200  0.22s  gabarito=['buraco']                       serviço= 1 det ['buraco']                       = local  rupesh-pothole__Pothole-385x.rf.b097b23e
+  200  0.19s  gabarito=['buraco']                       serviço= 0 det []                               = local  rupesh-pothole__img-588x.rf.0fbf53e7fe96
+  200  0.19s  gabarito=['piso_danificado']              serviço= 1 det ['piso_danificado']              = local  crack-seg__3197x.rf.ddf9927dcbb5a1d98983
+  200  0.21s  gabarito=['piso_danificado']              serviço= 1 det ['piso_danificado']              = local  crack-seg__2323x.rf.06768caef93b3a44d3c5
+  200  0.21s  gabarito=['buraco']                       serviço= 1 det ['buraco']                       = local  rupesh-pothole__Pothole-052x.rf.546c1d0e
+  200  0.20s  gabarito=['buraco']                       serviço= 1 det ['buraco']                       = local  manot-pothole__images300x.rf.2c4746cb58a
+[OK] 30 respostas 200 no schema do contrato  (30/30)
+[OK] resposta do serviço igual à do modelo ONNX local (mesmo modelo no ar)  (30/30)
+fotos com problema no gabarito em que o serviço achou ao menos uma classe certa: 26/29
+
+## 3. Tempo e métricas
+tempo por foto (rede + modelo): mediana 0.21 s · máximo 0.25 s
+[OK] todas abaixo dos 5 s de timeout da API principal  (máximo 0.25 s)
+[OK] GET /metrics → 200 (Prometheus)
+visao_requisicoes_total{rota="/deteccoes",status="200"} 31
+visao_requisicoes_total{rota="/deteccoes",status="401"} 2
+visao_requisicoes_total{rota="/deteccoes",status="413"} 1
+visao_requisicoes_total{rota="/deteccoes",status="422"} 2
+visao_deteccoes_total{classe="buraco"} 30
+visao_deteccoes_total{classe="piso_danificado"} 14
+visao_latencia_segundos{quantil="0.5"} 0.0526
+visao_latencia_segundos{quantil="0.95"} 0.0865
+visao_latencia_segundos{quantil="0.99"} 0.1097
+
+## Resumo
+checagens que falharam: 0

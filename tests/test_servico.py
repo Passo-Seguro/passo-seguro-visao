@@ -116,3 +116,9 @@ def test_lista_vazia_quando_nada_passa_do_limiar(tmp_path):
     with TestClient(criar_app(Config(modelo_path=str(modelo), token=TOKEN))) as c:
         r = post(c)
         assert r.status_code == 200 and r.json() == []
+
+
+def test_json_declara_charset_utf8(cliente):
+    # sem o charset, o Invoke-RestMethod do Windows PowerShell 5.1 lê o corpo como latin-1
+    for r in [post(cliente), post(cliente, token="errado"), cliente.get("/saude")]:
+        assert r.headers["content-type"] == "application/json; charset=utf-8", r.request.url

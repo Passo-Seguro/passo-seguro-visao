@@ -1,0 +1,17 @@
+# O que o `railway up` envia: só o que deploy/Dockerfile usa (a pasta tem ~1,4 GB de dados e treinos).
+*
+!requirements/
+!requirements/servico.txt
+!deploy/
+!deploy/Dockerfile
+!deploy/Dockerfile.dockerignore
+!visao/
+!visao/**
+!servico/
+!servico/**
+!config/
+!config/classes.yaml
+!modelos/
+!modelos/detector.onnx
+!modelos/detector.json
+**/__pycache__
